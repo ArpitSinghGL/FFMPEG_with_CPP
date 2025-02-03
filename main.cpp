@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
         return 6;
     }
 
-    if(!avcodec_parameters_to_context(video_codec_context , video_codec_parameters))
+    if(avcodec_parameters_to_context(video_codec_context , video_codec_parameters) < 0)
     {
         printf("Could not initialize AVCodecContext\n");
         return 7;
@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
 
     while(av_read_frame(av_format_context , av_packet) >= 0)
     {
-        if(av_packet -> stream_index = video_stream)
+        if(av_packet -> stream_index == video_stream)
         {
             // Decode the Video Packet(AVPacket: Compressed Video Data)
             // to get Video Frames (AVFrame: Raw Video Data)
@@ -157,11 +157,20 @@ int main(int argc, char* argv[])
             returnValue = avcodec_receive_frame(video_codec_context , av_frame);
             if(returnValue == AVERROR(EAGAIN) || returnValue == AVERROR_EOF)
             {
-                continue;
+                printf("Some error occurred\n");
             }
             else if(returnValue < 0)
             {
                 printf("Failed to decode packet\n");
+            }
+            else
+            {
+                // Printing Basic Frame Properties
+                printf("Frame Number: %d\n" , video_codec_context -> frame_number);
+                printf("Type: %c\n" , av_get_picture_type_char(av_frame -> pict_type));
+                printf("Size: %d bytes\n" , av_frame -> pkt_size);
+                printf("pts: %ld\n" , av_frame -> pts);
+                printf("key_frame: %d\n\n" , av_frame -> key_frame);
             }
         }
         av_packet_unref(av_packet);
