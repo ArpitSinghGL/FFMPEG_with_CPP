@@ -1,0 +1,115 @@
+1. Commands to get metadata: 
+   mediainfo vedio.mp4 (best) or ffprobe vedio.mp4 or ffmpeg -i vedio.mp4
+   
+   Using mediainfo vedio.mp4:
+   
+   General
+Complete name                            : vedio.mp4
+Format                                   : MPEG-4
+Format profile                           : Base Media / Version 2
+Codec ID                                 : mp42 (isom/mp42)
+File size                                : 4.70 MiB
+Duration                                 : 1 min 46 s
+Overall bit rate mode                    : Variable
+Overall bit rate                         : 372 kb/s
+Frame rate                               : 25.000 FPS
+Encoded date                             : 2024-09-16 02:52:12 UTC
+Tagged date                              : 2024-09-16 02:52:12 UTC
+Writing application                      : Google
+gsst                                     : 0
+gstd                                     : 106068
+
+Video
+ID                                       : 1
+Format                                   : AVC
+Format/Info                              : Advanced Video Codec
+Format profile                           : Main@L3
+Format settings                          : CABAC / 3 Ref Frames
+Format settings, CABAC                   : Yes
+Format settings, Reference frames        : 3 frames
+Codec ID                                 : avc1
+Codec ID/Info                            : Advanced Video Coding
+Duration                                 : 1 min 46 s
+Bit rate                                 : 240 kb/s
+Width                                    : 640 pixels
+Height                                   : 360 pixels
+Display aspect ratio                     : 16:9
+Frame rate mode                          : Constant
+Frame rate                               : 25.000 FPS
+Color space                              : YUV
+Chroma subsampling                       : 4:2:0
+Bit depth                                : 8 bits
+Scan type                                : Progressive
+Bits/(Pixel*Frame)                       : 0.042
+Stream size                              : 3.03 MiB (65%)
+Title                                    : ISO Media file produced by Google Inc. Created on: 09/15/2024.
+Writing library                          : x264 core 155 r2901 7d0ff22
+Encoded date                             : 2024-09-16 02:52:12 UTC
+Tagged date                              : 2024-09-16 02:52:12 UTC
+Color range                              : Limited
+Color primaries                          : BT.709
+Transfer characteristics                 : BT.709
+Matrix coefficients                      : BT.709
+Codec configuration box                  : avcC
+
+Audio
+ID                                       : 2
+Format                                   : AAC LC
+Format/Info                              : Advanced Audio Codec Low Complexity
+Codec ID                                 : mp4a-40-2
+Duration                                 : 1 min 46 s
+Bit rate mode                            : Variable
+Bit rate                                 : 128 kb/s
+Channel(s)                               : 2 channels
+Channel layout                           : L R
+Sampling rate                            : 44.1 kHz
+Frame rate                               : 43.066 FPS (1024 SPF)
+Compression mode                         : Lossy
+Stream size                              : 1.62 MiB (34%)
+Title                                    : ISO Media file produced by Google Inc. Created on: 09/15/2024.
+Language                                 : English
+Encoded date                             : 2024-09-16 02:52:12 UTC
+Tagged date                              : 2024-09-16 02:52:12 UTC
+
+
+2. Command to play video: ffplay vedio.mp4
+
+3. Command To get Frame Data: ffprobe -show_frames -select_streams v vedio.mp4
+
+[FRAME]
+media_type=video
+stream_index=0
+key_frame=0
+pts=1356288
+pts_time=105.960000
+pkt_dts=N/A
+pkt_dts_time=N/A
+best_effort_timestamp=1356288
+best_effort_timestamp_time=105.960000
+pkt_duration=512
+pkt_duration_time=0.040000
+duration=512
+duration_time=0.040000
+pkt_pos=4919964
+pkt_size=23
+width=640
+height=360
+crop_top=0
+crop_bottom=0
+crop_left=0
+crop_right=0
+pix_fmt=yuv420p
+sample_aspect_ratio=1:1
+pict_type=P
+coded_picture_number=2647
+display_picture_number=0
+interlaced_frame=0
+top_field_first=0
+repeat_pict=0
+color_range=tv
+color_space=bt709
+color_primaries=bt709
+color_transfer=bt709
+chroma_location=left
+[/FRAME]
+
