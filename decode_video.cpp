@@ -33,37 +33,6 @@ void print_yuv420_pixel_data_y_plane(AVFrame* frame)
     }
 }
 
-void convert_to_gray_scale(AVFrame* frame)
-{
-    if (frame->format != AV_PIX_FMT_YUV420P) 
-    {
-        fprintf(stderr, "Frame is not in YUV420p format\n");
-        return;
-    }
-
-    // Make the frame writable
-    if (av_frame_make_writable(frame) < 0) 
-    {
-        fprintf(stderr, "Failed to make frame writable\n");
-        return;
-    }
-
-    int uv_height = (frame -> height + 1)/2;
-    int uv_width = (frame -> width + 1)/2;
-
-    for(int y = 0 ; y < uv_height ; y++)
-    {
-        uint8_t* u_row = (frame -> data)[1] + y * (frame -> linesize)[1];
-        uint8_t* v_row = (frame -> data)[2] + y * (frame -> linesize)[2];
-
-        for(int x = 0 ; x < uv_width ; x++)
-        {
-            u_row[x] = 0;
-            v_row[x] = 0;
-        }
-    }
-}
-
 int main(int argc, char* argv[])
 {
     int returnValue = 0;
@@ -192,13 +161,6 @@ int main(int argc, char* argv[])
     }
 
     AVPacket* av_packet = av_packet_alloc();
-    // AVPacket* out_packet = av_packet_alloc();
-
-    // if(!av_packet || !out_packet)
-    // {
-    //     printf("Could not allocate AVPacket\n");
-    //     return 10;
-    // }
 
     while(av_read_frame(av_format_context , av_packet) >= 0)
     {
@@ -241,51 +203,16 @@ int main(int argc, char* argv[])
                 printf("Pixel Format: %s\n" , pixel_format_name);
 
                 // print_yuv420_pixel_data_y_plane(av_frame);
-
-                // convert_to_gray_scale(av_frame);
-
-                // Encode frame
-                // returnValue = avcodec_send_frame(video_encoder_context, av_frame);
-
-                // if(returnValue < 0)
-                // {
-                //     printf("Error sending frame for encoding\n");
-                //     return -1;
-                // }
-
-                // returnValue = avcodec_receive_packet(video_encoder_context, out_packet);
-
-                // if(returnValue < 0)
-                // {
-                //     printf("Failed to encode frame\n");
-                //     return -1;
-                // }
-
-                // returnValue = av_interleaved_write_frame(output_context, out_packet);
-
-                // if(returnValue < 0)
-                // {
-                //     printf("Failed to write packet to output media file\n");
-                //     return -1;
-                // }
-                
-                // av_packet_unref(out_packet);
-                // av_packet_unref(av_packet);
-                // break;
+ 
             }
         }
-        // av_packet_unref(out_packet);
         av_packet_unref(av_packet);
     }
 
     av_frame_free(&av_frame);
     av_packet_free(&av_packet);
-    // av_packet_free(&out_packet);
     avformat_free_context(av_format_context);
-    // avformat_free_context(output_context);
     avcodec_free_context(&video_decoder_context);
-    // avcodec_free_context(&video_encoder_context);
     avformat_close_input(&av_format_context);
-    // avformat_close_input(&output_context);
     return 0;
 }
